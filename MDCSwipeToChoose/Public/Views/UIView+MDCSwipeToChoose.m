@@ -65,7 +65,7 @@ const void * const MDCViewStateKey = &MDCViewStateKey;
 
     // Finalize upon completion of the animations.
     void (^completion)(BOOL) = ^(BOOL finished) {
-        if (finished) { [self mdc_finalizePosition]; }
+        if (finished) { [self mdc_finalizePositionWithDirection:direction]; }
     };
 
     [UIView animateWithDuration:self.mdc_options.swipeAnimationDuration
@@ -112,7 +112,11 @@ const void * const MDCViewStateKey = &MDCViewStateKey;
 #pragma mark Translation
 
 - (void)mdc_finalizePosition {
-    MDCSwipeDirection direction = [self mdc_directionOfExceededThreshold];
+	MDCSwipeDirection direction = [self mdc_directionOfExceededThreshold];
+	[self mdc_finalizePositionWithDirection:direction];
+}
+
+- (void)mdc_finalizePositionWithDirection:(MDCSwipeDirection)direction {
     switch (direction) {
         case MDCSwipeDirectionRight:
         case MDCSwipeDirectionLeft: {
